@@ -1,3 +1,5 @@
+import java.util.Scanner;
+import java.net.*;
 import java.io.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -5,6 +7,7 @@ import javax.swing.*;
 public class FTclient implements WindowConstants, SwingConstants
 {
 	/*This is the beginning of client file*/
+	Socket socket;
 	private JFileChooser choose;
 	private JFrame frameOne;
 	private JFrame frameTwo;
@@ -84,8 +87,8 @@ public class FTclient implements WindowConstants, SwingConstants
 		public void actionPerformed(ActionEvent e)
 		{
 			File file = choose.getSelectedFile();
-			String fileName = choose.getName(file);
 			System.out.println("The name of the file that was selected is"+fileName);
+			uploadFile(file);
 		}
 	}
 	public class DownloadButtonListener implements ActionListener
@@ -132,6 +135,26 @@ public class FTclient implements WindowConstants, SwingConstants
 		public void actionPerformed(ActionEvent e)
 		{
 			System.out.println("cancel button was clicked");
+		}
+	}
+	public Socket makeConnection()
+	{
+		return new Socket();
+	}
+	public void uploadFile(File file)
+	{
+		socket = makeConnection();
+		try
+		{
+			Scanner scan = new Scanner(file);
+			while(scan.hasNextLine())
+			{
+				System.out.println(scan.nextLine());
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("FILE NOT FOUND");
 		}
 	}
 }
