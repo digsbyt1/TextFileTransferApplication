@@ -5,6 +5,7 @@ public class FTthread extends Thread
 	/*this is the beginning of thread file*/
 	private int threadNumber;
 	private Socket connectSocket;
+	private File file;
 	public FTthread(int threadNumber, Socket connectSocket)
 	{
 		System.out.println("secondMode");
@@ -16,15 +17,29 @@ public class FTthread extends Thread
 		try
 		{
 			InputStream inStream = connectSocket.getInputStream();
-				System.out.println(1);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
 				String line = null;
+				int count = 0;
+				PrintWriter write = null;
+				file = null;
 				while((line = reader.readLine()) !=null)
 				{
-					System.out.println(line);
+					count++;
+					if(count == 1)
+					{
+						file = new File(line);
+						write = new PrintWriter(file);	
+					}
+					else
+					{
+						write.println(line);
+						System.out.println(line);
+					}
 				}
+				write.close();
 				reader.close();
 				connectSocket.close();
+				System.out.println("everything closed");
 		}
 		catch(Exception e)
 		{
@@ -33,4 +48,3 @@ public class FTthread extends Thread
 			
 	}
 }
-
