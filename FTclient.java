@@ -139,7 +139,15 @@ public class FTclient implements WindowConstants, SwingConstants
 	}
 	public Socket makeConnection()
 	{
-		return new Socket();
+		try
+		{
+			return new Socket("10.0.0.11",1234); //must set socket connection to server ip and port.
+		}
+		catch(Exception e)
+		{
+			System.out.println("not open socket.");
+			return null;
+		}
 	}
 	public void uploadFile(File file)
 	{
@@ -149,7 +157,9 @@ public class FTclient implements WindowConstants, SwingConstants
 			Scanner scan = new Scanner(file);
 			while(scan.hasNextLine())
 			{
-				System.out.println(scan.nextLine());
+				OutputStream outStream = socket.getOutputStream();
+				PrintWriter pw = new PrintWriter(outStream, true);
+				pw.println(scan.nextLine());
 			}
 		}
 		catch(Exception e)
