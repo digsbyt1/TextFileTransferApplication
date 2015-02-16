@@ -1,3 +1,4 @@
+import javax.swing.filechooser.*;
 import java.util.Scanner;
 import java.net.*;
 import java.io.*;
@@ -75,6 +76,7 @@ public class FTclient implements WindowConstants, SwingConstants
 		{
 			frameOne.setVisible(false);
 			choose = new JFileChooser();
+			choose.setFileFilter(new FileNameExtensionFilter("Text files","txt"));
 			choose.addActionListener(new ChooseButtonListener());
 			choose.setApproveButtonText("upload");
 			choose.setDialogTitle("upload");
@@ -155,11 +157,13 @@ public class FTclient implements WindowConstants, SwingConstants
 		try
 		{
 			Scanner scan = new Scanner(file);
+			OutputStream outStream = socket.getOutputStream();
+			PrintWriter pw = new PrintWriter(outStream,true);
 			while(scan.hasNextLine())
 			{
-				OutputStream outStream = socket.getOutputStream();
-				PrintWriter pw = new PrintWriter(outStream, true);
-				pw.println(scan.nextLine());
+				String line = scan.nextLine();
+				System.out.println(line);
+				pw.println(line);
 			}
 		}
 		catch(Exception e)
