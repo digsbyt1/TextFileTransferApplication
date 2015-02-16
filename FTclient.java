@@ -25,7 +25,7 @@ public class FTclient implements WindowConstants, SwingConstants
 	private JTextField fileName;
 	private final int WINDOW_WIDTH = 375;
 	private final int WINDOW_HEIGHT = 100;
-
+	private File file;
 	public static void main(String[] args)
 	{
 		FTclient client = new FTclient();
@@ -88,8 +88,46 @@ public class FTclient implements WindowConstants, SwingConstants
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			File file = choose.getSelectedFile();
-			System.out.println("The name of the file that was selected is"+fileName);
+			file = choose.getSelectedFile();
+			buildSaveFileName(file.getName());
+		//	uploadFile(file);
+		}
+	}
+	public void buildSaveFileName(String name)
+	{
+		frameOne = new JFrame();
+		frameOne.setSize(550,120);
+		frameOne.setTitle("save and upload");
+		frameOne.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		secondaryPanelTwo = new JPanel();
+		secondaryPanelTwo.setLayout(new GridLayout(3,1));
+		selectDownload = new JButton("save");//reuse button for save.
+		selectDownload.addActionListener(new SaveButtonListener());
+		instruct = new JLabel();
+		instruct.setText("<html>What would you like to name the file? i.e. Example.txt(you must place a .txt at the end).</html></br>");
+		fileName = new JTextField(20);
+		fileName.setText(name);
+		System.out.println(name.lastIndexOf(".txt"));
+		fileName.select(0,name.lastIndexOf(".txt"));
+		mainPanel = new JPanel();
+		JPanel mainPanelTwo = new JPanel();
+		JPanel mainPanelThree = new JPanel();
+		mainPanel.add(selectDownload);
+		mainPanelTwo.add(instruct);
+		mainPanelThree.add(fileName);
+		secondaryPanelTwo.add(mainPanelTwo);
+		secondaryPanelTwo.add(mainPanelThree);
+		secondaryPanelTwo.add(mainPanel); 
+		frameOne.add(secondaryPanelTwo);
+		frameOne.setVisible(true);
+		
+		
+	}
+	public class SaveButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			frameOne.setVisible(false);
 			uploadFile(file);
 		}
 	}
@@ -98,6 +136,7 @@ public class FTclient implements WindowConstants, SwingConstants
 		public void actionPerformed(ActionEvent e)
 		{
 			frameOne.setVisible(false);
+
 			JFrame frameTwo = new JFrame();
 			frameTwo.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
 			frameTwo.setTitle("Download");
@@ -159,12 +198,16 @@ public class FTclient implements WindowConstants, SwingConstants
 			Scanner scan = new Scanner(file);
 			OutputStream outStream = socket.getOutputStream();
 			PrintWriter pw = new PrintWriter(outStream,true);
+			pw.println(fileName.getText());
 			while(scan.hasNextLine())
 			{
 				String line = scan.nextLine();
 				System.out.println(line);
 				pw.println(line);
 			}
+			pw.close();
+			scan.close();
+			outStream.close();
 		}
 		catch(Exception e)
 		{
