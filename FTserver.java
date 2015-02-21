@@ -13,7 +13,6 @@ public class FTserver
 			ServerSocket socket = new ServerSocket(1234);
 			while(true)
 			{
-				System.out.println("first mode");
 				Socket connectSocket = socket.accept();
 				counter++;
 				FTthread thread = new FTthread(counter, connectSocket);
