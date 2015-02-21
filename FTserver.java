@@ -2,7 +2,9 @@ import java.net.*;
 import java.io.*;
 public class FTserver
 {
-	/*this is the beginning of server file */
+	/*
+		this is the beginning of server file 
+	*/
 	public static void main(String[] args)
 	{
 		int counter = 0;
