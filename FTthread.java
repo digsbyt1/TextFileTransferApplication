@@ -123,7 +123,7 @@ public class FTthread extends Thread
     		respond(1);
    		try
     		{
-      			file = new File("/users/tdiggz/desktop/programming/text-file_transfer/server/");
+      			file = new File("");//Place location of directory of downloadable files here
       			fileList = file.listFiles();
 			write.println(fileList.length);
 			for(int i = 0; i<fileList.length;i++)
@@ -207,7 +207,7 @@ public class FTthread extends Thread
 	public boolean isThere(String string)
 	{
 		bool = false;
-		file = new File("/users/tdiggz/desktop/programming/text-file_transfer/server");
+		file = new File("");//Place location of directory of downloadable files here
 		fileList = file.listFiles();
 		for(int i = 0; i<fileList.length; i++)
 		{

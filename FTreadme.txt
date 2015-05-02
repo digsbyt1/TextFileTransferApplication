@@ -1,5 +1,9 @@
 This is a simple text file transfer application.
 
+Configuration Instruction:
+on line 126 and line 210 of the FTthread.java file enter the file path of the directory of the downloadable files. 
+
+
 The client is allowed to upload and download text files
 
 to and from the server. The application is straight forward.
